@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>Splash.qml</file>
+        <file>ImageButton.qml</file>
     </qresource>
 </RCC>
