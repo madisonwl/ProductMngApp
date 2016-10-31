@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>Splash.qml</file>
         <file>ImageButton.qml</file>
+        <file>icons/ic_search.png</file>
     </qresource>
 </RCC>
