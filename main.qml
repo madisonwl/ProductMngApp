@@ -6,26 +6,43 @@ Window {
     width: 1000;
     height: 600;
     title: qsTr("生产线监控软件");
-    color: "blue";
+    color: "#002056";
 
 
     Splash{}  //启动画面
-    Text {
-        id: testButton;
-        text: qsTr("text");
+
+
+    ButtonList{
+        id:appShow;
+        opacity: 0;
+        anchors.fill: parent;
+        anchors.leftMargin: 400;
     }
 
-    ImageButton{
-        id:buttonTest;
-        anchors.centerIn: parent;
-        width: 200;
-        height: 100;
-        iconSource:"icons/ic_search.png";
-        border.color: "#0075f0";
-        text: "测试";
+    SequentialAnimation{
+        running: true;
 
-        onClicked: {
+        PauseAnimation {
+            duration: 1300;
+        }
 
+        ParallelAnimation{  //模糊度渐变
+
+            NumberAnimation {
+                targets: appShow;
+                properties: "opacity";
+                to:1;
+                duration: 600;
+                easing.type: Easing.InOutQuad;
+            }
+
+            NumberAnimation {   //appShow 界面从右面出来
+                target: appShow;
+                property: "anchors.leftMargin";
+                to: 0;
+                duration: 1000;
+                easing.type: Easing.OutQuint
+            }
         }
     }
 

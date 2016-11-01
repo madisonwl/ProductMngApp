@@ -4,7 +4,7 @@ import QtGraphicalEffects 1.0
 Rectangle {
     id:appslpash;
     anchors.fill: parent;
-    color:"transparent";   //透明
+    color:"black";   //透明
 
     Text{
         id:title;

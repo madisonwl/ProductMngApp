@@ -4,5 +4,12 @@
         <file>Splash.qml</file>
         <file>ImageButton.qml</file>
         <file>icons/ic_search.png</file>
+        <file>ButtonList.qml</file>
+        <file>icons/main.png</file>
+        <file>icons/computer1.png</file>
+        <file>icons/syssetup.png</file>
+        <file>icons/display.png</file>
+        <file>icons/file-doc.png</file>
+        <file>ProcessXmlMng.qml</file>
     </qresource>
 </RCC>

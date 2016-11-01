@@ -2,7 +2,7 @@ import QtQuick 2.5
 
 Rectangle {
     id: imgButton;
-    implicitWidth: 180;
+    implicitWidth: 100;
     implicitHeight: 100;
     color: "red";
     property alias iconSource: appicon.source;
@@ -11,10 +11,11 @@ Rectangle {
     property alias textColor: btntext.color;
     property alias text: btntext.text;
     property alias font: btntext.font;
-    radius: 6;
+  //  radius: 6;  //圆角
     property bool hovered: false;
     border.color: "#949494";
     border.width: hovered ? 2:0;
+    antialiasing: true;    //消除锯齿，动态是产生锯齿
     signal clicked;
 
     transform: [
@@ -60,17 +61,25 @@ Rectangle {
     //图片
     Image {
         id: appicon;
-        anchors.left: parent.left; //图片在按钮的左侧
-        anchors.verticalCenter: parent.verticalCenter; //上下居中
+        width:64;
+        height:64
+        fillMode: Image.PreserveAspectFit;
+        //anchors.left: parent.left; //图片在按钮的左侧
+        //anchors.verticalCenter: parent.verticalCenter; //上下居中
+        anchors.centerIn: parent;
     }
 
     //文字
     Text{
         id:btntext;
-        anchors.left: appicon.right; //在图片右侧
-        anchors.verticalCenter: appicon.verticalCenter;
+       // anchors.left: appicon.right; //在图片右侧
+        //anchors.verticalCenter: appicon.verticalCenter;
+        anchors.left: parent.left;
+        anchors.leftMargin: 4;
+        anchors.bottom: parent.bottom;
+        anchors.bottomMargin:  4;
         anchors.margins: 4;
-        font.pointSize: 30;
+        font.pointSize: 10;
         color:imgBtnMouseArea.pressed ? "blue" : (parent.hovered ?"#0000a0" : "white");
     }
 
