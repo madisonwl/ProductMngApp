@@ -1,12 +1,14 @@
 import QtQuick 2.5
 import QtQuick.Window 2.2
+import QtQuick.Controls 1.4
 
 Window {
     visible: true
-    width: 1000;
-    height: 600;
+    width: Screen.width;//1000;
+    height: Screen.height;//600;
     title: qsTr("生产线监控软件");
     color: "#002056";
+    id:root;
 
 
     Splash{}  //启动画面
@@ -43,7 +45,29 @@ Window {
                 duration: 1000;
                 easing.type: Easing.OutQuint
             }
+
+            ColorAnimation {
+                target: root;
+                property: "color";
+               // from: "black"
+                to: "#002056"
+                duration: 1000
+              //  easing.type: Easing.OutQuint
+            }
         }
+    }
+    Button{
+        id: exitSys;
+        anchors.right: parent.right;
+        anchors.rightMargin: 4;
+        anchors.bottom: parent.bottom;
+        anchors.bottomMargin:  4;
+        width: 80;
+        height: 48;
+        style: Qt.createComponent("CommButtonStyle.qml");
+        text: qsTr("退出系统");
+        onClicked: Qt.quit();
+
     }
 
 }

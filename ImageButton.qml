@@ -13,8 +13,9 @@ Rectangle {
     property alias font: btntext.font;
   //  radius: 6;  //圆角
     property bool hovered: false;
+    property bool focused: false;
     border.color: "#949494";
-    border.width: hovered ? 2:0;
+    border.width: (hovered && focused) ? 2:0;
     antialiasing: true;    //消除锯齿，动态是产生锯齿
     signal clicked;
 
@@ -80,7 +81,7 @@ Rectangle {
         anchors.bottomMargin:  4;
         anchors.margins: 4;
         font.pointSize: 10;
-        color:imgBtnMouseArea.pressed ? "blue" : (parent.hovered ?"#0000a0" : "white");
+        color:(imgBtnMouseArea.pressed && focused ) ? "blue" : (/*parent.hovered ?"#0000a0" :*/ "white");
     }
 
     MouseArea{
@@ -92,42 +93,44 @@ Rectangle {
         onPressed: {
             down = true;
             imgButton.hovered = false;
-            rotationTransform.axis.x = 0;
-            rotationTransform.axis.y = 0;
-            rotationTransform.origin.x = imgButton.width / 2.0
-            rotationTransform.origin.y = imgButton.height / 2.0
+            if(focused==true){
+                rotationTransform.axis.x = 0;
+                rotationTransform.axis.y = 0;
+                rotationTransform.origin.x = imgButton.width / 2.0
+                rotationTransform.origin.y = imgButton.height / 2.0
 
-            if (mouseX > parent.width - 50)
-            {
-                rotationTransform.origin.x = 0;
-                rotationTransform.axis.y = 1;
-                rotationTransform.angle = 15;
-                return;
+                if (mouseX > parent.width - 50)
+                {
+                    rotationTransform.origin.x = 0;
+                    rotationTransform.axis.y = 1;
+                    rotationTransform.angle = 15;
+                    return;
+                }
+
+                if (mouseX < 50) {
+                    rotationTransform.origin.x = imgButton.width;
+                    rotationTransform.axis.y = 1;
+                    rotationTransform.angle = -15;
+                    return;
+                }
+
+                if (mouseY < 30) {
+                    rotationTransform.origin.y = imgButton.height;
+                    rotationTransform.axis.x = 1;
+                    rotationTransform.angle = 15;
+                    return;
+                }
+
+                if (mouseY > parent.height - 30) {
+                    rotationTransform.origin.y = 0;
+                    rotationTransform.axis.x = 1;
+                    rotationTransform.angle = -15;
+                    return;
+                }
+
+                scaleTransform.xScale = 0.95;
+                scaleTransform.yScale = 0.95;
             }
-
-            if (mouseX < 50) {
-                rotationTransform.origin.x = imgButton.width;
-                rotationTransform.axis.y = 1;
-                rotationTransform.angle = -15;
-                return;
-            }
-
-            if (mouseY < 30) {
-                rotationTransform.origin.y = imgButton.height;
-                rotationTransform.axis.x = 1;
-                rotationTransform.angle = 15;
-                return;
-            }
-
-            if (mouseY > parent.height - 30) {
-                rotationTransform.origin.y = 0;
-                rotationTransform.axis.x = 1;
-                rotationTransform.angle = -15;
-                return;
-            }
-
-            scaleTransform.xScale = 0.95;
-            scaleTransform.yScale = 0.95;
         }
         onEntered: {
             imgButton.hovered = true;
@@ -152,9 +155,11 @@ Rectangle {
             down = false;
         }
         function reset(){
-            scaleTransform.xScale = 1;
-            scaleTransform.yScale = 1;
-            rotationTransform.angle = 0;
+            if(focused==true){
+                scaleTransform.xScale = 1;
+                scaleTransform.yScale = 1;
+                rotationTransform.angle = 0;
+            }
         }
 
     }

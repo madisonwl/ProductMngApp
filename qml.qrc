@@ -11,5 +11,7 @@
         <file>icons/display.png</file>
         <file>icons/file-doc.png</file>
         <file>ProcessXmlMng.qml</file>
+        <file>CommButtonStyle.qml</file>
+        <file>Test.qml</file>
     </qresource>
 </RCC>

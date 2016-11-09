@@ -1,10 +1,39 @@
 import QtQuick 2.5
+import QtQuick.Window 2.2
 
 Rectangle {
     id:buttonsList;
-    width: 500;
-    height: 200;
+    width: 800;
+    height: 480;
     color: "transparent"; //透明
+    property bool focused: true;
+
+    property Component processXmlMngComponent: null;
+    property var processXmlMngWindow: null;
+    function showProcessXmlMng(){
+        if(processXmlMngComponent == null){
+            processXmlMngComponent = Qt.createComponent("ProcessXmlMng.qml");
+        }
+        if(processXmlMngWindow == null /*&& processXmlMngComponent.status == processXmlMngComponent.Ready*/){
+            processXmlMngWindow = processXmlMngComponent.createObject(
+                        buttonsList,
+                        {
+                            "width": 800, "height": 500,
+                            "x": (Screen.width - 800)/2,
+
+                            "y": (Screen.height - 500)/2
+                        }
+                        );
+            processXmlMngWindow.canceled.connect(onProcessXmlMngCanceled);
+        }
+    }
+
+    function onProcessXmlMngCanceled(){
+        processXmlMngWindow.destroy();
+        processXmlMngWindow = null;
+        buttonsList.focused = true;
+        update();
+    }
 
     Grid{
         anchors.centerIn: parent;
@@ -25,11 +54,15 @@ Rectangle {
             border.color: "#0075f0";
             color:"#0075f0";
             text: "主监控";
+            focused: buttonsList.focused;
 
             onClicked: {
-                loader.source = "ProcessXmlMng.qml";
-                //loader.source = "ProcessXmlMng.qml";
-                loadingAction.start();
+//                loader.source = "ProcessXmlMng.qml";
+//                //loader.source = "ProcessXmlMng.qml";
+//                loadingAction.start();
+                buttonsList.showProcessXmlMng();
+                buttonsList.focused = false;
+
             }
         }
         ImageButton{
@@ -40,6 +73,7 @@ Rectangle {
             border.color: "#0075f0";
             color:"#0075f0";
             text: "工艺管理";
+            focused: buttonsList.focused;
         }
 
         ImageButton{
@@ -50,6 +84,7 @@ Rectangle {
             border.color: "#0075f0";
             color:"#0075f0";
             text: "产品管理";
+            focused: buttonsList.focused;
         }
 
         ImageButton{
@@ -60,6 +95,7 @@ Rectangle {
             border.color: "#0075f0";
             color:"#0075f0";
             text: "订单管理";
+            focused: buttonsList.focused;
         }
 
         ImageButton{
@@ -70,6 +106,7 @@ Rectangle {
             border.color: "#0075f0";
             color:"#0075f0";
             text: "设备监控";
+            focused: buttonsList.focused;
         }
 
         ImageButton{
@@ -80,6 +117,7 @@ Rectangle {
             border.color: "#0075f0";
             color:"#0075f0";
             text: "程序传输";
+            focused: buttonsList.focused;
         }
 
         ImageButton{
@@ -90,6 +128,7 @@ Rectangle {
             border.color: "#0075f0";
             color:"#0075f0";
             text: "设备配置";
+            focused: buttonsList.focused;
         }
 
         ImageButton{
@@ -101,6 +140,7 @@ Rectangle {
            // color:"#0075f0";
             color:"#D9522C";
             text: "系统设置";
+            focused: buttonsList.focused;
         }
     }
     Loader {
